@@ -2,27 +2,20 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/movieListFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/movieListFragment"
-        android:name="com.github.beleavemebe.moviesapp.presentation.list.MovieListFragment"
-        android:label="MovieListFragment" >
+        android:name="com.github.beleavemebe.moviesapp.ui.movies.MovieReviewListFragment"
+        android:label="MovieListFragment"/>
 
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.github.beleavemebe.moviesapp.ui.splash.SplashFragment"
+        android:label="SplashFragment" >
         <action
-            android:id="@+id/action_movieListFragment_to_movieDetailsFragment2"
-            app:destination="@id/movieDetailsFragment" />
-
+            android:id="@+id/action_splashFragment_to_movieListFragment"
+            app:destination="@id/movieListFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/movieDetailsFragment"
-        android:name="com.github.beleavemebe.moviesapp.presentation.details.MovieDetailsFragment"
-        android:label="MovieDetailsFragment" />
-
-    <fragment
-        android:id="@+id/remindersFragment"
-        android:name="com.github.beleavemebe.moviesapp.presentation.reminders.RemindersFragment"
-        android:label="RemindersFragment" />
 
 </navigation>

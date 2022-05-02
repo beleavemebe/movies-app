@@ -1,4 +1,4 @@
-package com.github.beleavemebe.moviesapp.presentation
+package com.github.beleavemebe.moviesapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.github.beleavemebe.moviesapp.R
 import com.github.beleavemebe.moviesapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
