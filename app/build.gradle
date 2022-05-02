@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -8,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.github.beleavemebe.moviesapp"
-        minSdk 26
+        minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -39,6 +41,30 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    def hilt_version = "2.41"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    def orbit_mvi_version = "4.3.2"
+    implementation "org.orbit-mvi:orbit-core:$orbit_mvi_version"
+    implementation "org.orbit-mvi:orbit-viewmodel:$orbit_mvi_version"
+    implementation "org.orbit-mvi:orbit-test:$orbit_mvi_version"
+
+    def paging_version = "3.1.1"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    def logging_interceptor_version = "4.9.3"
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime-ktx:$room_version"
+    implementation "androidx.room:room-paging:2.5.0-alpha01"
+    kapt "androidx.room:room-compiler:$room_version"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
