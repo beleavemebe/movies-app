@@ -5,4 +5,5 @@ object ApiConstants {
     const val API_KEY = "KFGwd6UWM3swGhIvDbst4I9c8jt0r5vR"
     const val PAGE_SIZE = 20
     const val FIRST_PAGE = 0
+    const val TIMEOUT = 20L
 }

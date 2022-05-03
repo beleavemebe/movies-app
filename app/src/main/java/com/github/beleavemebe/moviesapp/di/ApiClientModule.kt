@@ -1,6 +1,7 @@
 package com.github.beleavemebe.moviesapp.di
 
 import com.github.beleavemebe.moviesapp.apiclient.ApiConstants
+import com.github.beleavemebe.moviesapp.apiclient.ApiConstants.TIMEOUT
 import com.github.beleavemebe.moviesapp.apiclient.NyTimesService
 import com.github.beleavemebe.moviesapp.utils.log
 import dagger.Module
@@ -14,6 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -46,6 +48,9 @@ object ApiClientModule {
         interceptors: Set<@JvmSuppressWildcards Interceptor>
     ): OkHttpClient {
         return OkHttpClient.Builder()
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .addInterceptors(interceptors)
             .build()
     }
@@ -67,7 +72,6 @@ object ApiClientModule {
     ): NyTimesService {
         return retrofit.create()
     }
-
 }
 
 private fun OkHttpClient.Builder.addInterceptors(
