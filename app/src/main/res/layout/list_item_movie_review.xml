@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/tvSummaryShort"
-            style="@style/TextAppearance.MaterialComponents.Body1"
+            style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
