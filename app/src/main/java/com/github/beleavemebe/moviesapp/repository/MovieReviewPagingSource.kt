@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.github.beleavemebe.moviesapp.apiclient.ApiConstants
 import com.github.beleavemebe.moviesapp.apiclient.NyTimesService
 import com.github.beleavemebe.moviesapp.model.MovieReview
+import com.github.beleavemebe.moviesapp.utils.log
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -19,18 +20,22 @@ class MovieReviewPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieReview> {
         return try {
-            val currPage = params.key ?: ApiConstants.FIRST_PAGE
-            val response = nyTimesService.getAllMovies(currPage)
+            val currKey = params.key ?: ApiConstants.FIRST_PAGE
+            val response = nyTimesService.getAllMovies(currKey)
             val movies = response.movieReviews
 
-            val prevKey = params.key.takeUnless { it == ApiConstants.FIRST_PAGE }
+            val prevKey = currKey.takeUnless {
+                    it == ApiConstants.FIRST_PAGE
+                }
+                ?.minus(ApiConstants.PAGE_SIZE)
+
             val nextKey = if (!response.hasMore) {
                 null
-            } else if (prevKey != null) {
-                prevKey + ApiConstants.PAGE_SIZE
-            } else {
-                ApiConstants.FIRST_PAGE
+            } else  {
+                currKey + ApiConstants.PAGE_SIZE
             }
+
+            log { "currKey $currKey, prevKey $prevKey, nextKey $nextKey" }
 
             LoadResult.Page(movies, prevKey, nextKey)
         } catch (e: HttpException) {
