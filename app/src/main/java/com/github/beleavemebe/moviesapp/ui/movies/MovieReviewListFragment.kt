@@ -33,8 +33,8 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
         initRecyclerView()
         initSwipeRefreshLayout()
-        subscribeToViewModel()
         subscribeToLoadState()
+        subscribeToViewModel()
     }
 
     private fun initRecyclerView() {
@@ -52,6 +52,18 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
     private fun initSwipeRefreshLayout() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
+        }
+    }
+
+    private fun subscribeToLoadState() {
+        adapter.addLoadStateListener { state ->
+            val isLoading = state.refresh is LoadState.Loading
+            viewModel.onLoadingState(isLoading)
+
+            val isError = state.refresh is LoadState.Error
+            if (isError) {
+                viewModel.onDataLoadError()
+            }
         }
     }
 
@@ -93,14 +105,5 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
 
     private fun triggerRefresh() {
         adapter.refresh()
-    }
-
-    private fun subscribeToLoadState() {
-        adapter.addLoadStateListener { state ->
-            viewModel.onLoadingState(state.refresh == LoadState.Loading)
-            if (state.refresh is LoadState.Error) {
-                viewModel.onDataLoadError()
-            }
-        }
     }
 }
