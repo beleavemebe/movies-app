@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Movies App</string>
     <string name="movies">Movies</string>
-    <string name="reminders">Reminders</string>
 </resources>
