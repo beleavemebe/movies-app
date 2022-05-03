@@ -13,12 +13,4 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/list_item_movie_review" />
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/circularProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:indeterminateTint="?attr/colorPrimaryVariant" />
-
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

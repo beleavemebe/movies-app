@@ -3,7 +3,6 @@ package com.github.beleavemebe.moviesapp.ui.movies
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -41,14 +40,18 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
     private fun initRecyclerView() {
         binding.rvMovieReviews.adapter = adapter
             .withLoadStateHeaderAndFooter(
-                header = MovieReviewLoadStateAdapter(),
-                footer = MovieReviewLoadStateAdapter { viewModel.retry() }
+                header = createLoadStateAdapter(),
+                footer = createLoadStateAdapter()
             )
+    }
+
+    private fun createLoadStateAdapter() = MovieReviewLoadStateAdapter {
+        viewModel.retry()
     }
 
     private fun initSwipeRefreshLayout() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.retry()
+            viewModel.refresh()
         }
     }
 
@@ -61,7 +64,6 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
     }
 
     private fun renderState(state: MovieReviewListState) {
-        binding.circularProgress.isVisible = state.isLoading
         binding.swipeRefreshLayout.isRefreshing = state.isLoading
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.submitData(state.pagingData)
@@ -72,6 +74,7 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
         when (sideEffect) {
             is MovieReviewListSideEffect.RetryLoading -> retryLoading()
             is MovieReviewListSideEffect.ShowRetryLoadingSnackbar -> showRetryLoadingSnackbar()
+            is MovieReviewListSideEffect.TriggerRefresh -> triggerRefresh()
         }
 
     private fun retryLoading() {
@@ -86,6 +89,10 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
         ).setAction(R.string.retry) {
             viewModel.retry()
         }.show()
+    }
+
+    private fun triggerRefresh() {
+        adapter.refresh()
     }
 
     private fun subscribeToLoadState() {

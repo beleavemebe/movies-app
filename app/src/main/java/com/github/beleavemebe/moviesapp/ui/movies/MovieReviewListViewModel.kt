@@ -55,4 +55,8 @@ class MovieReviewListViewModel @Inject constructor(
             state.copy(isLoading = isLoading)
         }
     }
+
+    fun refresh() = intent {
+        postSideEffect(MovieReviewListSideEffect.TriggerRefresh)
+    }
 }
