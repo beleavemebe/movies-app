@@ -3,4 +3,5 @@
     <string name="movies">Movies</string>
     <string name="share_button">Share button</string>
     <string name="review_image">Review image</string>
+    <string name="unable_to_open_the_link">Unable to open the link</string>
 </resources>
