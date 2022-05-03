@@ -34,7 +34,7 @@ class MovieReviewPagingSource @Inject constructor(
                 currKey + ApiConstants.PAGE_SIZE
             }
 
-            log { "currKey $currKey, prevKey $prevKey, nextKey $nextKey" }
+            log("currKey $currKey, prevKey $prevKey, nextKey $nextKey")
 
             LoadResult.Page(movies, prevKey, nextKey)
         } catch (e: Exception) {

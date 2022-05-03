@@ -50,7 +50,7 @@ class MovieReviewListViewModel @Inject constructor(
     }
 
     fun onLoadingState(isLoading: Boolean) = intent {
-        log { "onLoadingState $isLoading" }
+        log("onLoadingState $isLoading")
         reduce {
             state.copy(isLoading = isLoading)
         }

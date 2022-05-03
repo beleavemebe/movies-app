@@ -23,8 +23,8 @@ object ApiClientModule {
 
     @[Provides IntoSet]
     fun provideLoggingInterceptor(): Interceptor {
-        return HttpLoggingInterceptor {
-            log { it }
+        return HttpLoggingInterceptor { msg ->
+            log(msg)
         }.apply {
             level = HttpLoggingInterceptor.Level.BASIC
         }
