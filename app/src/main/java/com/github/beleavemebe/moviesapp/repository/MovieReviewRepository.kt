@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class MovieReviewRepository @Inject constructor(
-    private val pagingSourceProvider: Provider<out MovieReviewPagingSource>,
+    private val pagingSourceProvider: Provider<@JvmSuppressWildcards MovieReviewPagingSource>,
 ) {
     fun getMovieReviews(): Flow<PagingData<MovieReview>> = Pager(
         config = PagingConfig(
