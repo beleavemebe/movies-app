@@ -6,7 +6,6 @@ import com.github.beleavemebe.moviesapp.apiclient.ApiConstants
 import com.github.beleavemebe.moviesapp.apiclient.NyTimesService
 import com.github.beleavemebe.moviesapp.model.MovieReview
 import com.github.beleavemebe.moviesapp.utils.log
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class MovieReviewPagingSource @Inject constructor(
@@ -38,7 +37,7 @@ class MovieReviewPagingSource @Inject constructor(
             log { "currKey $currKey, prevKey $prevKey, nextKey $nextKey" }
 
             LoadResult.Page(movies, prevKey, nextKey)
-        } catch (e: HttpException) {
+        } catch (e: Exception) {
             LoadResult.Error(e)
         }
     }
