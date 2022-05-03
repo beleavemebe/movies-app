@@ -1,20 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_small"
+    app:cardElevation="@dimen/card_elevation">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="'The Survivor' Review: Clenched Fists" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineContentStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_default" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineContentEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_default" />
+
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            app:layout_constraintEnd_toStartOf="@+id/ivImage"
+            app:layout_constraintStart_toStartOf="@+id/guidelineContentStart"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="'The Survivor' Review: Clenched Fists" />
+
+        <TextView
+            android:id="@+id/tvSummaryShort"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/margin_default"
+            app:layout_constraintEnd_toStartOf="@+id/ivImage"
+            app:layout_constraintStart_toStartOf="@+id/guidelineContentStart"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="In this drama from Barry Levinson, Ben Foster plays a Jewish boxer who, during the Holocaust, was forced to fight his fellow Jews for the Nazis’ entertainment." />
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="@dimen/review_image_size"
+            android:layout_height="@dimen/review_image_size"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:contentDescription="@string/review_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineContentEnd"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:src="@tools:sample/avatars" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tvTitle, tvSummaryShort, ivImage" />
+
+        <TextView
+            android:id="@+id/tvPublicationDate"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineContentStart"
+            app:layout_constraintTop_toBottomOf="@id/barrierSummary"
+            tools:text="5d ago" />
+
+        <ImageButton
+            android:id="@+id/ic_share"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/share_button"
+            android:src="@drawable/ic_share"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineContentEnd"
+            app:layout_constraintTop_toBottomOf="@id/barrierSummary" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

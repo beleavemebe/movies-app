@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rvMovieReviews"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rvMovieReviews"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#f0f0f0"
+    tools:listitem="@layout/list_item_movie_review"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

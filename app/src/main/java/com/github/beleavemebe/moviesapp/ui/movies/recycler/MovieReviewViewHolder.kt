@@ -18,6 +18,8 @@ class MovieReviewViewHolder(
 
     private fun renderItem(movieReview: MovieReview) {
         binding.tvTitle.text = movieReview.headline
+        binding.tvSummaryShort.text = movieReview.summaryShort
+        binding.tvPublicationDate.text = movieReview.publicationDate
     }
 
     private fun renderPlaceholder() {
