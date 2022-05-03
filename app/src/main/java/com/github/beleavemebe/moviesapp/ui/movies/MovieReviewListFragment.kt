@@ -33,6 +33,7 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
         _binding = FragmentMovieReviewListBinding.bind(view)
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
         initRecyclerView()
+        initSwipeRefreshLayout()
         subscribeToViewModel()
         subscribeToLoadState()
     }
@@ -41,8 +42,14 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
         binding.rvMovieReviews.adapter = adapter
             .withLoadStateHeaderAndFooter(
                 header = MovieReviewLoadStateAdapter(),
-                footer = MovieReviewLoadStateAdapter()
+                footer = MovieReviewLoadStateAdapter { viewModel.retry() }
             )
+    }
+
+    private fun initSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.retry()
+        }
     }
 
     private fun subscribeToViewModel() {
@@ -55,6 +62,7 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
 
     private fun renderState(state: MovieReviewListState) {
         binding.circularProgress.isVisible = state.isLoading
+        binding.swipeRefreshLayout.isRefreshing = state.isLoading
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.submitData(state.pagingData)
         }
@@ -76,7 +84,7 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
             R.string.could_not_load_data,
             Snackbar.LENGTH_INDEFINITE
         ).setAction(R.string.retry) {
-            viewModel.onRetryClicked()
+            viewModel.retry()
         }.show()
     }
 

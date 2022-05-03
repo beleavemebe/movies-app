@@ -45,7 +45,7 @@ class MovieReviewListViewModel @Inject constructor(
         postSideEffect(MovieReviewListSideEffect.ShowRetryLoadingSnackbar)
     }
 
-    fun onRetryClicked() = intent {
+    fun retry() = intent {
         postSideEffect(MovieReviewListSideEffect.RetryLoading)
     }
 

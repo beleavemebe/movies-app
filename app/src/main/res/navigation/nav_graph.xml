@@ -7,15 +7,18 @@
     <fragment
         android:id="@+id/movieListFragment"
         android:name="com.github.beleavemebe.moviesapp.ui.movies.MovieReviewListFragment"
-        android:label="MovieListFragment"/>
+        android:label="MovieListFragment" />
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.github.beleavemebe.moviesapp.ui.splash.SplashFragment"
-        android:label="SplashFragment" >
+        android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_movieListFragment"
-            app:destination="@id/movieListFragment" />
+            app:destination="@id/movieListFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@navigation/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

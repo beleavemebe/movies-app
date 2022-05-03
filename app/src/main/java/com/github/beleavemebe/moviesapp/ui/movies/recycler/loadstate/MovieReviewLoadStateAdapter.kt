@@ -7,7 +7,9 @@ import androidx.paging.LoadStateAdapter
 import com.github.beleavemebe.moviesapp.databinding.ListItemErrorBinding
 import com.github.beleavemebe.moviesapp.databinding.ListItemLoaderBinding
 
-class MovieReviewLoadStateAdapter : LoadStateAdapter<LoadStateViewHolder>() {
+class MovieReviewLoadStateAdapter(
+    private val onRetryClicked: () -> Unit = {},
+) : LoadStateAdapter<LoadStateViewHolder>() {
     override fun getStateViewType(
         loadState: LoadState
     ): Int = when (loadState) {
@@ -29,10 +31,12 @@ class MovieReviewLoadStateAdapter : LoadStateAdapter<LoadStateViewHolder>() {
     ): LoadStateViewHolder = when (loadState) {
         is LoadState.NotLoading -> error("Not supported")
         is LoadState.Loading -> createLoaderViewHolder(parent)
-        is LoadState.Error -> createErrorViewHolder(parent)
+        is LoadState.Error -> createErrorViewHolder(parent, onRetryClicked)
     }
 
-    private fun createLoaderViewHolder(parent: ViewGroup) = LoaderViewHolder(
+    private fun createLoaderViewHolder(
+        parent: ViewGroup
+    ) = LoaderViewHolder(
         ListItemLoaderBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -40,12 +44,16 @@ class MovieReviewLoadStateAdapter : LoadStateAdapter<LoadStateViewHolder>() {
         )
     )
 
-    private fun createErrorViewHolder(parent: ViewGroup) = ErrorViewHolder(
+    private fun createErrorViewHolder(
+        parent: ViewGroup,
+        onRetryClicked: () -> Unit
+    ) = ErrorViewHolder(
         ListItemErrorBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
-        )
+        ),
+        onRetryClicked
     )
 
     companion object {
