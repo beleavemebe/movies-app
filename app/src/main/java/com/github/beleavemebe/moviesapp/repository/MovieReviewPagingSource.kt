@@ -12,7 +12,9 @@ class MovieReviewPagingSource @Inject constructor(
     private val nyTimesService: NyTimesService
 ) : PagingSource<Int, MovieReview>() {
     override fun getRefreshKey(state: PagingState<Int, MovieReview>): Int? {
-        return state.anchorPosition
+        val anchorPosition = state.anchorPosition ?: return null
+        val page = state.closestPageToPosition(anchorPosition) ?: return null
+        return page.prevKey?.plus(ApiConstants.PAGE_SIZE) ?: page.nextKey?.minus(ApiConstants.PAGE_SIZE)
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieReview> {
