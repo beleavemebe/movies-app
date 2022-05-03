@@ -25,6 +25,8 @@ object ApiClientModule {
     fun provideLoggingInterceptor(): Interceptor {
         return HttpLoggingInterceptor {
             log { it }
+        }.apply {
+            level = HttpLoggingInterceptor.Level.BASIC
         }
     }
 
