@@ -4,4 +4,6 @@
     <string name="share_button">Share button</string>
     <string name="review_image">Review image</string>
     <string name="unable_to_open_the_link">Unable to open the link</string>
+    <string name="could_not_load_data">Could not load data</string>
+    <string name="retry">Retry</string>
 </resources>
