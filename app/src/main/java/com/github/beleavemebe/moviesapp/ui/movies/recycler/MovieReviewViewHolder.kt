@@ -54,6 +54,12 @@ class MovieReviewViewHolder(
     }
 
     private fun renderPlaceholder() {
+        binding.tvTitle.text = ""
+        binding.tvSummaryShort.text = ""
+        binding.tvPublicationDate.text = ""
+        binding.ivImage.setImageDrawable(null)
+        binding.root.setOnClickListener {}
+
         binding.shimmerLayout.isVisible = true
         binding.shimmerLayout.startShimmer()
     }
