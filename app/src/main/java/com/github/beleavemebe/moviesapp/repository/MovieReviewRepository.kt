@@ -10,16 +10,15 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class MovieReviewRepository @Inject constructor(
+    private val pagingConfig: PagingConfig,
     private val pagingSourceProvider: Provider<@JvmSuppressWildcards MovieReviewPagingSource>,
 ) {
     fun getMovieReviews(): Flow<PagingData<MovieReview>> = Pager(
-        config = PagingConfig(
-            pageSize = ApiConstants.PAGE_SIZE,
-            prefetchDistance = PREFETCH_DISTANCE,
-            maxSize = MAX_SIZE,
-        ),
+        config = pagingConfig,
         initialKey = 0,
-        pagingSourceFactory = { pagingSourceProvider.get() }
+        pagingSourceFactory = {
+            pagingSourceProvider.get()
+        }
     ).flow
 
     companion object {
