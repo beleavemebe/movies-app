@@ -15,7 +15,7 @@ class MovieReviewRepository @Inject constructor(
 ) {
     fun getMovieReviews(): Flow<PagingData<MovieReview>> = Pager(
         config = pagingConfig,
-        initialKey = 0,
+        initialKey = ApiConstants.FIRST_PAGE,
         pagingSourceFactory = {
             pagingSourceProvider.get()
         }
