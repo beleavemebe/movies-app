@@ -11,6 +11,7 @@ import com.github.beleavemebe.moviesapp.databinding.ListItemMovieReviewBinding
 import com.github.beleavemebe.moviesapp.model.MovieReview
 
 class MovieReviewViewHolder(
+    private val onReviewClicked: (MovieReview) -> Unit,
     private val binding: ListItemMovieReviewBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(movieReview: MovieReview?) {
@@ -32,25 +33,11 @@ class MovieReviewViewHolder(
             .into(binding.ivImage)
 
         binding.root.setOnClickListener {
-            openReview(movieReview.link.url)
+            onReviewClicked(movieReview)
         }
 
         binding.shimmerLayout.stopShimmer()
         binding.shimmerLayout.isVisible = false
-    }
-
-    private fun openReview(reviewUrl: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(reviewUrl))
-        intent.addCategory(Intent.CATEGORY_BROWSABLE)
-        if (intent.resolveActivity(itemView.context.packageManager) != null) {
-            itemView.context.startActivity(intent)
-        } else {
-            Toast.makeText(
-                itemView.context,
-                R.string.unable_to_open_the_link,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
     private fun renderPlaceholder() {

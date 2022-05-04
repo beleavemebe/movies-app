@@ -1,7 +1,10 @@
 package com.github.beleavemebe.moviesapp.ui.movies
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -9,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.github.beleavemebe.moviesapp.R
 import com.github.beleavemebe.moviesapp.databinding.FragmentMovieReviewListBinding
+import com.github.beleavemebe.moviesapp.ui.movies.MovieReviewListSideEffect.*
 import com.github.beleavemebe.moviesapp.ui.movies.recycler.MovieReviewAdapter
 import com.github.beleavemebe.moviesapp.ui.movies.recycler.loadstate.MovieReviewLoadStateAdapter
 import com.google.android.material.snackbar.Snackbar
@@ -24,7 +28,7 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
     private val viewModel: MovieReviewListViewModel by viewModels()
 
     private val adapter by lazy {
-        MovieReviewAdapter()
+        MovieReviewAdapter(viewModel::onReviewClicked)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,9 +49,10 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
             )
     }
 
-    private fun createLoadStateAdapter() = MovieReviewLoadStateAdapter {
-        viewModel.retry()
-    }
+    private fun createLoadStateAdapter() =
+        MovieReviewLoadStateAdapter {
+            viewModel.retry()
+        }
 
     private fun initSwipeRefreshLayout() {
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -84,9 +89,11 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
 
     private fun handleSideEffect(sideEffect: MovieReviewListSideEffect) =
         when (sideEffect) {
-            is MovieReviewListSideEffect.RetryLoading -> retryLoading()
-            is MovieReviewListSideEffect.ShowRetryLoadingSnackbar -> showRetryLoadingSnackbar()
-            is MovieReviewListSideEffect.TriggerRefresh -> triggerRefresh()
+            is RetryLoading -> retryLoading()
+            is ShowRetryLoadingSnackbar -> showRetryLoadingSnackbar()
+            is TriggerRefresh -> triggerRefresh()
+            is OpenMovieReview -> openReview(sideEffect.movieReview.link.url)
+            is ShowUnableToOpenTheLinkToast -> showUnableToOpenTheLinkToast()
         }
 
     private fun retryLoading() {
@@ -105,5 +112,23 @@ class MovieReviewListFragment : Fragment(R.layout.fragment_movie_review_list) {
 
     private fun triggerRefresh() {
         adapter.refresh()
+    }
+    
+    private fun openReview(reviewUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(reviewUrl))
+        intent.addCategory(Intent.CATEGORY_BROWSABLE)
+        if (intent.resolveActivity(requireContext().packageManager) != null) {
+            requireContext().startActivity(intent)
+        } else {
+            viewModel.onOpenReviewFailed()
+        }
+    }
+
+    private fun showUnableToOpenTheLinkToast() {
+        Toast.makeText(
+            requireContext(),
+            R.string.unable_to_open_the_link,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

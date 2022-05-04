@@ -59,4 +59,12 @@ class MovieReviewListViewModel @Inject constructor(
     fun refresh() = intent {
         postSideEffect(MovieReviewListSideEffect.TriggerRefresh)
     }
+
+    fun onReviewClicked(movieReview: MovieReview) = intent {
+        postSideEffect(MovieReviewListSideEffect.OpenMovieReview(movieReview))
+    }
+
+    fun onOpenReviewFailed() = intent {
+        postSideEffect(MovieReviewListSideEffect.ShowUnableToOpenTheLinkToast)
+    }
 }

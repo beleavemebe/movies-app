@@ -24,9 +24,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         viewModel.observe(viewLifecycleOwner, null, ::handleSideEffect)
     }
 
-    private fun handleSideEffect(sideEffect: SplashSideEffect) = when (sideEffect) {
-        SplashSideEffect.NavigateToMovieList -> navigateToMovieListFragment()
-    }
+    private fun handleSideEffect(sideEffect: SplashSideEffect) =
+        when (sideEffect) {
+            SplashSideEffect.NavigateToMovieList -> navigateToMovieListFragment()
+        }
 
     private fun navigateToMovieListFragment() {
         findNavController().navigate(R.id.action_splashFragment_to_movieListFragment)

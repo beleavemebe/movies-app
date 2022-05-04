@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import com.github.beleavemebe.moviesapp.databinding.ListItemMovieReviewBinding
 import com.github.beleavemebe.moviesapp.model.MovieReview
 
-class MovieReviewAdapter : PagingDataAdapter<MovieReview, MovieReviewViewHolder>(DIFF_CALLBACK) {
+class MovieReviewAdapter(
+    private val onReviewClicked: (MovieReview) -> Unit,
+) : PagingDataAdapter<MovieReview, MovieReviewViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieReviewViewHolder {
         return MovieReviewViewHolder(
+            onReviewClicked,
             ListItemMovieReviewBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,

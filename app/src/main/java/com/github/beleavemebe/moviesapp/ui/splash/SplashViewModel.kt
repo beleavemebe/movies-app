@@ -13,6 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor() : ViewModel(), ContainerHost<SplashState, SplashSideEffect> {
+
     override val container: Container<SplashState, SplashSideEffect> =
         container(SplashState())
 
